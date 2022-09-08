@@ -28,118 +28,16 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: check
-  test:
-    runs-on: '${{ matrix.os }}'
-    strategy:
-      matrix:
-        include:
-          - os: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: '${{ runner.os }}-cargo-registry-${{ hashFiles(''**/Cargo.lock'') }}'
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: '${{ runner.os }}-cargo-index-${{ hashFiles(''**/Cargo.lock'') }}'
-      - uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
-      - uses: actions-rs/cargo@v1
-        with:
-          command: run
-          args: '-- -h'
-  lints:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/registry
-          key: '${{ runner.os }}-cargo-registry-${{ hashFiles(''**/Cargo.lock'') }}'
-      - uses: actions/cache@v1
-        with:
-          path: ~/.cargo/git
-          key: '${{ runner.os }}-cargo-index-${{ hashFiles(''**/Cargo.lock'') }}'
-      - uses: actions/cache@v1
-        with:
-          path: target
-          key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-          components: 'rustfmt, clippy'
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: '--all -- --check'
-      - uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: '-- -D warnings'
-  version:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@master
-        with:
-          lfs: true
-      - run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-      - id: get_previous_version
-        run: echo ::set-output name=PREVIOUS_VERSION::$(git describe --tags "$(git rev-list --tags --max-count=1)")
-        shell: bash
-      - id: semvers
-        uses: WyriHaximus/github-action-next-semvers@master
-        with:
-          version: '${{ steps.get_previous_version.outputs.PREVIOUS_VERSION }}'
-      - run: mkdir -p ./version
-      - if: "!contains(github.event.head_commit.message, 'BC BREAK') && !contains(github.event.head_commit.message, 'Signed-off-by: dependabot-preview[bot] <support@dependabot.com>')"
-        run: echo "$VERSION" >./version/version
-        env:
-          VERSION: ${{ steps.semvers.outputs.v_minor }}
-      - if: "contains(github.event.head_commit.message, 'Signed-off-by: dependabot-preview[bot] <support@dependabot.com>')"
-        run: echo "$VERSION" >./version/version
-        env:
-          VERSION: ${{ steps.semvers.outputs.v_patch }}
-      - run: echo "$VERSION" > ./version/version
-        env:
-          VERSION: ${{ steps.semvers.outputs.v_major }}
-        if: "contains(github.event.head_commit.message, 'BC BREAK')"
-      - uses: actions/upload-artifact@master
-        with:
-          name: version
-          path: ./version/version
   build:
     needs:
-      - version
-      - lints
-      - test
       - check
     runs-on: '${{ matrix.os }}'
     strategy:
       matrix:
         include:
-          - os: macos-latest
-            target: x86_64-apple-darwin
-            suffix: ''
           - os: windows-latest
             target: x86_64-unknown-linux-gnu
             suffix: ''
-          - os: windows-latest
-            target: x86_64-pc-windows-msvc
-            suffix: .exe
     steps:
       - uses: actions/checkout@master
         with:
