@@ -1,0 +1,4 @@
+{
+    "discord.enabled": false,
+    "rust-analyzer.files.excludeDirs": [".drp_config"]
+}
