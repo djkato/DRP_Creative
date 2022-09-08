@@ -4,7 +4,7 @@ This app runs in the background and looks for processes, then parses the windows
 
 
 ## how to install:
-1. Grab the latest version from the [Releases](https://github.com) page, then make a folder in `C:/Program Files/` and call it whatever, for example `DRP Creative`. 
+1. Grab the latest version from the [Releases](https://github.com/djkato/DRP_Creative/releases) page, then make a folder in `C:/Program Files/` and call it whatever, for example `DRP Creative`. 
 3. Do `[WindowsButton] + R`, type `Shell:StartUp`, hit enter. A folder will open.
 4. Put the exe file inside this folder(Now the app will start on pc start)
 5. If you want to run it now, double click it
