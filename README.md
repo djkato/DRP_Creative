@@ -2,6 +2,10 @@
 ### Show your friends what you're working on, be it in Adobe Suite, Autodesk Suite, Cinema 4D or many more!
 This app runs in the background and looks for processes, then parses the windows title and turns it into a project name to display with Discords Rich Presence.
 
+Examples:
+![example1](https://i.imgur.com/yFzQh6O.png)
+![example2](https://i.imgur.com/fziotzt.png)
+![example3](https://i.imgur.com/9SEXuQr.png)
 
 ## how to install:
 1. Grab the latest version from the [Releases](https://github.com/djkato/DRP_Creative/releases) page, then make a folder in `C:/Program Files/` and call it whatever, for example `DRP Creative`. 
@@ -13,7 +17,7 @@ This app runs in the background and looks for processes, then parses the windows
 ## How to use:
 
 When it's running, you'll notice a new icon appear on your Taskbar. If you want to exclude the **currently open project** from showing up, click on the icon and click on `Don't show current project`.
-![text](https://i.imgur.com/nADffGB.png)
+![icon showcase](https://i.imgur.com/nADffGB.png)
 If you want to revert these settings, you can go to the folder you put the exe in (example was `C:/Program Files/DRP Creative`)
 
 ### Currently supported programs:
