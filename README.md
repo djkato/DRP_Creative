@@ -16,9 +16,10 @@ Examples:
 
 ## How to use:
 
-When it's running, you'll notice a new icon appear on your Taskbar. If you want to exclude the **currently open project** from showing up, click on the icon and click on `Don't show current project`.
+-   When it's running, you'll notice a new icon appear on your Taskbar. If you want to exclude the **currently open project** from showing up, click on the icon and click on `Don't show current project`.
 ![icon showcase](https://i.imgur.com/nADffGB.png)
-If you want to revert these settings, you can go to the folder you put the exe in (example was `C:/Program Files/DRP Creative`)
+
+-   To change the portfolio website or remove excluded projects and words from the program, run the program at least once, and a `.drp_config` file will appear. You can open this with any text editor and rewrite the lines there. be gentle though, program expects a certain format for the file ^^'
 
 ### Currently supported programs:
 **Full support:**
