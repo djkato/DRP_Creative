@@ -220,7 +220,7 @@ impl Apps {
                 kind: AppKind::Vegas,
                 default_project_name: "Vegas Project".to_string(),
                 drp_client_id: "1017882355723153448".to_string(),
-                process_search_string: "Vegas Pro".to_string(),
+                process_search_string: "VEGAS Pro".to_string(),
             },
         }
     }
@@ -246,13 +246,11 @@ impl App {
                 for (i, char) in window_title.chars().enumerate() {
                     if char == '[' {
                         start_i = i;
-                        match window_title.find(".c4d]") {
-                            Some(i) => end_i = i as usize,
-                            None => match window_title.find(" - Main") {
-                                Some(i) => end_i = i as usize,
-                                None => end_i = window_title.len(),
-                            },
-                        };
+                        if let Some(curr_end_i) = window_title.rfind("] - ") {
+                            end_i = curr_end_i;
+                        } else {
+                            return self.default_project_name.clone();
+                        }
                     }
                 }
                 return window_title[start_i + 1..end_i].to_string();
@@ -262,9 +260,12 @@ impl App {
                     Some(i) => i + 5,
                     None => match window_title.as_str().find(".mb - Autodesk Maya") {
                         Some(i) => i + 4,
-                        None => {
-                            return self.default_project_name.clone();
-                        }
+                        None => match window_title.as_str().find(" - Autodesk Maya") {
+                            Some(i) => i,
+                            None => {
+                                return self.default_project_name.clone();
+                            }
+                        },
                     },
                 };
                 return window_title[..match_index as usize].to_string();
@@ -289,9 +290,12 @@ impl App {
                     Some(i) => i + 5,
                     None => match window_title.as_str().find(".max - Autodesk 3ds Max") {
                         Some(i) => i + 4,
-                        None => {
-                            return self.default_project_name.clone();
-                        }
+                        None => match window_title.as_str().find(" - Autodesk 3ds Max") {
+                            Some(i) => i,
+                            None => {
+                                return self.default_project_name.clone();
+                            }
+                        },
                     },
                 };
                 return window_title[..match_index as usize].to_string();
@@ -437,7 +441,21 @@ impl App {
             AppKind::Audition => self.default_project_name.clone(),
             AppKind::SubstancePainter => self.default_project_name.clone(),
             AppKind::SubstanceDesigner => self.default_project_name.clone(),
-            AppKind::Vegas => self.default_project_name.clone(),
+            AppKind::Vegas => {
+                let match_index = match window_title.as_str().find(".veg* - VEGAS Pro") {
+                    Some(i) => i + 5,
+                    None => match window_title.as_str().find(".veg - VEGAS Pro") {
+                        Some(i) => i + 4,
+                        None => match window_title.as_str().find(" - VEGAS Pro") {
+                            Some(i) => i,
+                            None => {
+                                return self.default_project_name.clone();
+                            }
+                        },
+                    },
+                };
+                return window_title[..match_index as usize].to_string();
+            }
         }
     }
 }
