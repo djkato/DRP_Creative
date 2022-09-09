@@ -6,11 +6,11 @@ use windows::Win32::{
 pub fn get_running_program(apps: &Apps) -> Option<(&App, String)> {
     let running_window_names = unsafe { get_running_windows_titles() };
     for window_name in running_window_names {
-        dbg!(&window_name);
+        //dbg!(&window_name);
         if let Some(app) = apps.find_app(&window_name) {
             if !window_name.contains("- Google Chrome") {
                 //So googling it won't affect the DRP lol
-                //return Some((&app, app.parse(&window_name)));
+                return Some((&app, app.parse(&window_name)));
             }
         }
     }
