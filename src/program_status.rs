@@ -5,10 +5,13 @@ use windows::Win32::{
 };
 pub fn get_running_program(apps: &Apps) -> Option<(&App, String)> {
     let running_window_names = unsafe { get_running_windows_titles() };
-
     for window_name in running_window_names {
+        dbg!(&window_name);
         if let Some(app) = apps.find_app(&window_name) {
-            return Some((&app, app.parse(&window_name)));
+            if !window_name.contains("- Google Chrome") {
+                //So googling it won't affect the DRP lol
+                //return Some((&app, app.parse(&window_name)));
+            }
         }
     }
     return None;
@@ -17,15 +20,17 @@ pub fn is_program_still_running(app: &App) -> Option<String> {
     let running_window_names = unsafe { get_running_windows_titles() };
 
     for window_name in running_window_names {
-        //dbg!(&window_name);
         if window_name.contains(&app.process_search_string) {
-            return Some(app.parse(&window_name));
+            if !window_name.contains("- Google Chrome") {
+                //So googling it won't affect the DRP lol
+                return Some(app.parse(&window_name));
+            }
         }
     }
     return None;
 }
 
-unsafe fn get_running_windows_titles() -> Vec<String> {
+pub unsafe fn get_running_windows_titles() -> Vec<String> {
     let mut running_windows_names: Vec<String> = Vec::new();
     unsafe extern "system" fn processhwd(hwnd: HWND, lparam: LPARAM) -> BOOL {
         // Get the length of the window text
@@ -46,7 +51,8 @@ unsafe fn get_running_windows_titles() -> Vec<String> {
         for char in window_text_buffer {
             window_text.push(char as char);
         }
-        //turn characters into strings
+        //turn characters into strings, but exclude last weird escape null char "\0"
+        window_text.pop();
         let window_text = String::from_iter(window_text.iter());
 
         //turn vector into pointer and push window_texts to it

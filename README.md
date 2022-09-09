@@ -20,16 +20,22 @@ If you want to revert these settings, you can go to the folder you put the exe i
 **Full support:**
 -   Cinema 4D
 -   Adobe After Effects
+-   Adobe Illustrator
+-   Adobe Photoshop
+-   Adobe Premiere Pro
 -   Autodesk Maya
-
-**Partial support:** *(meaning it shows up on Discord, but doesn't display the project name)*
+-   Autodesk 3Ds Max
 -   Davinci Resolve
--   Illustrator
--   Photoshop
 -   Isotropix Clarisse
--   Marvelous Designer
 -   Calvary
 -   Ableton
 -   FL Studio
--   Autodesk 3Ds Max
--   Adobe Premiere Pro
+-   Blender
+
+**Partial support:** *(meaning it shows up on Discord, but doesn't display the project name)*
+-   Marvelous Designer ¹*
+-   Substance Designer ¹*
+-   Substance Painter  ¹*
+-   Adobe Audition ¹*
+
+¹*sadly not doable, project name not in proces window title. They will show up though, just with default project name*

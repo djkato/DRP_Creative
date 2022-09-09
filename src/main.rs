@@ -1,4 +1,4 @@
-#![windows_subsystem = "windows"]
+//#![windows_subsystem = "windows"] //UNCOMMENT ONLY WHEN BUILDING FOR RELEASE TO NOT SHOW TERMINAL WINDOW!
 pub mod app;
 pub mod config;
 pub mod program_status;
