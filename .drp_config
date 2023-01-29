@@ -9,3 +9,7 @@ djkato.net
 EXCLUDE_CHARACTERS_LIST:{
 no_drp
 }
+
+HIDE_PORTFOLIO_ROW:{
+no
+}

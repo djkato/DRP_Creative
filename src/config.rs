@@ -5,6 +5,7 @@ pub struct Config {
     pub exclude_keywords_list: Vec<String>,
     pub should_exclude_be_invisible: bool,
     pub portfolio_link: String,
+    pub hide_portfolio_row: bool,
 }
 
 impl Config {
@@ -36,7 +37,7 @@ fn parse_config_file(config_file: &String) -> Config {
     let mut exclude_keywords_list: Vec<String> = Vec::new();
     let mut should_exclude_be_invisible = false;
     let mut portfolio_link = String::new();
-
+    let mut hide_portfolio_row = false;
     for (i, line) in config_file.lines().enumerate() {
         if line.contains("SHOULD_EXCLUDE_BE_ANONYMOUS:") {
             match config_file
@@ -45,6 +46,7 @@ fn parse_config_file(config_file: &String) -> Config {
                 .expect("index out of bounds")
                 .to_lowercase()
                 .as_str()
+                .trim()
             {
                 "n" => should_exclude_be_invisible = false,
                 "no" => should_exclude_be_invisible = false,
@@ -69,11 +71,28 @@ fn parse_config_file(config_file: &String) -> Config {
                 portfolio_link = arg_line.to_string();
             }
         }
+        if line.contains("HIDE_PORTFOLIO_ROW:") {
+            match config_file
+                .lines()
+                .nth(i + 1)
+                .expect("index out of bounds")
+                .to_lowercase()
+                .as_str()
+                .trim()
+            {
+                "n" => hide_portfolio_row = false,
+                "no" => hide_portfolio_row = false,
+                "y" => hide_portfolio_row = true,
+                "yes" => hide_portfolio_row = true,
+                _ => hide_portfolio_row = false,
+            }
+        }
     }
     Config {
         exclude_keywords_list,
         should_exclude_be_invisible,
         portfolio_link,
+        hide_portfolio_row,
     }
 }
 

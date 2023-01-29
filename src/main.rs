@@ -61,14 +61,18 @@ fn main() {
                     prev_project_name = project_name.clone();
                     let details = format!("Working on {}", &project_name.clone());
                     //update activity
-                    let state = format!("Portfolio: {}", &config.portfolio_link);
-                    let activity = activity::Activity::new()
-                        .state(state.as_str())
+
+                    let mut activity = activity::Activity::new()
                         .details(&details.as_str())
                         .assets(
                             activity::Assets::new().large_image(current_app.drp_client_id.as_str()),
                         )
                         .timestamps(activity::Timestamps::new().start(start_time as i64));
+                    let state;
+                    if !config.hide_portfolio_row {
+                        state = format!("Portfolio: {}", &config.portfolio_link);
+                        activity = activity.state(state.as_str());
+                    }
                     //if discord client exists, update status
                     if let Some(dc) = discord_client.as_mut() {
                         match dc.set_activity(activity) {
