@@ -51,7 +51,7 @@ no
 -   Autodesk 3Ds Max
 -   Davinci Resolve
 -   Isotropix Clarisse
--   Calvary
+-   Cavalry
 -   Ableton
 -   FL Studio
 -   Blender
