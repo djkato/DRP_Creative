@@ -1,15 +1,24 @@
 #![windows_subsystem = "windows"] //UNCOMMENT ONLY WHEN BUILDING FOR RELEASE TO NOT SHOW TERMINAL WINDOW!
+#[macro_use]
+extern crate self_update;
+
 pub mod app;
 pub mod config;
 pub mod program_status;
+pub mod self_updater;
 pub mod tray_icon;
 use crate::config::Config;
 use crate::program_status::*;
+use crate::self_updater::try_update;
 use app::{App, Apps};
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{thread, time};
 fn main() {
+    match try_update() {
+        Ok(_) => {}
+        Err(e) => println!("Failed to update! {e}"),
+    }
     let apps = Apps::construct_apps();
     let mut config = Config::load();
 
