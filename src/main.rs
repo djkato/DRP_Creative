@@ -108,7 +108,7 @@ fn main() {
                             }
                         }
                     }
-                    tray_icon::Message::Quit => break 'main,
+                    tray_icon::Message::Quit => panic!(),
                 },
                 Err(_err) => (),
             }
