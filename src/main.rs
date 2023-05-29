@@ -1,4 +1,4 @@
-#![windows_subsystem = "windows"] //UNCOMMENT ONLY WHEN BUILDING FOR RELEASE TO NOT SHOW TERMINAL WINDOW!
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 #[macro_use]
 extern crate self_update;
 
@@ -12,6 +12,7 @@ use crate::program_status::*;
 use crate::self_updater::try_update;
 use app::{App, Apps};
 use discord_rich_presence::{activity, DiscordIpc, DiscordIpcClient};
+use std::process::exit;
 use std::time::{SystemTime, UNIX_EPOCH};
 use std::{thread, time};
 fn main() {
@@ -32,7 +33,7 @@ fn main() {
     let mut drp_is_running = false;
     let mut discord_client: Option<DiscordIpcClient> = None;
     let mut current_app_option: Option<&App> = None;
-    'main: loop {
+    loop {
         if let Some(current_app) = current_app_option {
             if let Some(real_project_name) = is_program_still_running(&current_app) {
                 //if project name includes filtered words, use default project name
@@ -108,11 +109,22 @@ fn main() {
                             }
                         }
                     }
-                    tray_icon::Message::Quit => panic!(),
+                    tray_icon::Message::Quit => {
+                        println!("qiuitting!");
+                        exit(0)
+                    }
                 },
                 Err(_err) => (),
             }
         } else {
+            //respond to tray icon messages
+            match tray_receiver.try_recv() {
+                Ok(msg) => match msg {
+                    tray_icon::Message::AnonymiseProject => {}
+                    tray_icon::Message::Quit => exit(0),
+                },
+                Err(_err) => (),
+            }
             //If nothing is running try to find it
             if let Some(proj_name) = get_running_program(&apps) {
                 let temp_curr_app: &App;

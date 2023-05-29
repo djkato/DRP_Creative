@@ -251,7 +251,7 @@ dependencies = [
 
 [[package]]
 name = "drp_creative"
-version = "1.0.0"
+version = "1.0.1"
 dependencies = [
  "discord-rich-presence",
  "lazy_static",

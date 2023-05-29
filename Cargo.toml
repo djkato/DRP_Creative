@@ -1,6 +1,6 @@
 [package]
 name = "drp_creative"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 author = "https://djkato.net"
 
@@ -9,7 +9,7 @@ discord-rich-presence = "0.2.2"
 regex = "1.6.0"
 tray-item = "0.7.0"
 lazy_static = "1.4.0"
-self_update = {version= "0.36.0", features= ["archive-zip"]}
+self_update = { version = "0.36.0", features = ["archive-zip"] }
 win-msgbox = "0.1.2"
 
 [dependencies.windows]

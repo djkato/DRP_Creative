@@ -30,6 +30,7 @@ pub enum AppKind {
     SubstancePainter,
     SubstanceDesigner,
     Vegas,
+    ZBrush,
 }
 
 pub struct Apps {
@@ -52,10 +53,11 @@ pub struct Apps {
     SubstancePainter: App,
     SubstanceDesigner: App,
     Vegas: App,
+    ZBrush: App,
 }
 impl Apps {
-    pub fn as_iter(&self) -> [&App; 19] {
-        let APPS: [&App; 19] = [
+    pub fn as_iter(&self) -> [&App; 20] {
+        let APPS: [&App; 20] = [
             &self.C4d,
             &self.Maya,
             &self.ThreeDsMax,
@@ -75,13 +77,14 @@ impl Apps {
             &self.SubstancePainter,
             &self.SubstanceDesigner,
             &self.Vegas,
+            &self.ZBrush,
         ];
         APPS
     }
 }
 impl AppKind {
-    pub fn as_iter() -> [AppKind; 19] {
-        let APPKINDS: [AppKind; 19] = [
+    pub fn as_iter() -> [AppKind; 20] {
+        let APPKINDS: [AppKind; 20] = [
             AppKind::C4d,
             AppKind::Maya,
             AppKind::ThreeDsMax,
@@ -101,6 +104,7 @@ impl AppKind {
             AppKind::SubstancePainter,
             AppKind::SubstanceDesigner,
             AppKind::Vegas,
+            AppKind::ZBrush,
         ];
         APPKINDS
     }
@@ -221,6 +225,12 @@ impl Apps {
                 default_project_name: "Vegas Project".to_string(),
                 drp_client_id: "1017882355723153448".to_string(),
                 process_search_string: "VEGAS Pro".to_string(),
+            },
+            ZBrush: App {
+                kind: AppKind::Vegas,
+                default_project_name: "ZBrush Project".to_string(),
+                drp_client_id: "1112734356855865425".to_string(),
+                process_search_string: "ZBrush".to_string(),
             },
         }
     }
@@ -456,6 +466,7 @@ impl App {
                 };
                 return window_title[..match_index as usize].to_string();
             }
+            AppKind::ZBrush => self.default_project_name.clone(),
         }
     }
 }
