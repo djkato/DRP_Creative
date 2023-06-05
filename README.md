@@ -61,5 +61,6 @@ no
 -   Substance Designer ¹*
 -   Substance Painter  ¹*
 -   Adobe Audition ¹*
+-   ZBrush ¹*
 
 ¹*sadly not doable, project name not in proces window title. They will show up though, just with default project name*
