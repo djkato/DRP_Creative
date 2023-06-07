@@ -9,10 +9,11 @@ Examples:
 
 ## how to install:
 1. Grab the latest version from the [Releases](https://github.com/djkato/DRP_Creative/releases) page, then make a folder in `C:/Program Files/` and call it whatever, for example `DRP Creative`.
-3. Do `[WindowsButton] + R`, type `Shell:StartUp`, hit enter. A folder will open.
-4. Put the exe file inside this folder(Now the app will start on pc start)
-5. If you want to run it now, double click it
-6. Enjoy!
+3. Put the exe inside the folder you created and create a link to it.
+4. Do `[WindowsButton] + R`, type `Shell:StartUp`, hit enter. A folder will open.
+5. Take the link file and put it inside the startup folder (Now the app will start on pc start)
+6. If you want to run it now, double click it
+7. Enjoy!
 
 ## How to use:
 -   App updates will be notified and suggested on startup via popup window.
@@ -61,5 +62,6 @@ no
 -   Substance Designer ¹*
 -   Substance Painter  ¹*
 -   Adobe Audition ¹*
+-   ZBrush ¹*
 
 ¹*sadly not doable, project name not in proces window title. They will show up though, just with default project name*
