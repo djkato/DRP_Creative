@@ -31,6 +31,7 @@ pub enum AppKind {
     SubstanceDesigner,
     Vegas,
     ZBrush,
+    Darktable,
 }
 
 pub struct Apps {
@@ -54,10 +55,11 @@ pub struct Apps {
     SubstanceDesigner: App,
     Vegas: App,
     ZBrush: App,
+    Darktable: App,
 }
 impl Apps {
-    pub fn as_iter(&self) -> [&App; 20] {
-        let APPS: [&App; 20] = [
+    pub fn as_iter(&self) -> [&App; 21] {
+        let APPS: [&App; 21] = [
             &self.C4d,
             &self.Maya,
             &self.ThreeDsMax,
@@ -78,13 +80,14 @@ impl Apps {
             &self.SubstanceDesigner,
             &self.Vegas,
             &self.ZBrush,
+            &self.Darktable,
         ];
         APPS
     }
 }
 impl AppKind {
-    pub fn as_iter() -> [AppKind; 20] {
-        let APPKINDS: [AppKind; 20] = [
+    pub fn as_iter() -> [AppKind; 21] {
+        let APPKINDS: [AppKind; 21] = [
             AppKind::C4d,
             AppKind::Maya,
             AppKind::ThreeDsMax,
@@ -105,6 +108,7 @@ impl AppKind {
             AppKind::SubstanceDesigner,
             AppKind::Vegas,
             AppKind::ZBrush,
+            AppKind::Darktable,
         ];
         APPKINDS
     }
@@ -231,6 +235,12 @@ impl Apps {
                 default_project_name: "ZBrush Project".to_string(),
                 drp_client_id: "1112734356855865425".to_string(),
                 process_search_string: "ZBrush".to_string(),
+            },
+            Darktable: App {
+                kind: AppKind::Darktable,
+                default_project_name: "Darktable Project".to_string(),
+                drp_client_id: "1116027286110609459".to_string(),
+                process_search_string: "darktable.exe".to_string(),
             },
         }
     }
@@ -467,6 +477,7 @@ impl App {
                 return window_title[..match_index as usize].to_string();
             }
             AppKind::ZBrush => self.default_project_name.clone(),
+            AppKind::Darktable => self.default_project_name.clone(),
         }
     }
 }
