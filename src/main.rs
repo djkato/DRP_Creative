@@ -139,7 +139,10 @@ fn main() {
                         exit(0)
                     }
                     tray_icon::Message::OpenOptionsFile => {
-                        let _ = std::process::Command::new("crp_config.toml").spawn();
+                        let _ = std::process::Command::new("notepad")
+                            .arg("drp_config.toml")
+                            .current_dir("./")
+                            .spawn();
                     }
                 },
                 Err(_err) => (),
