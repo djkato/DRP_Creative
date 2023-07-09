@@ -7,7 +7,7 @@ pub mod config;
 pub mod program_status;
 pub mod self_updater;
 pub mod tray_icon;
-use crate::config::Config;
+use crate::config::{Config, IncludeExclude};
 use crate::program_status::*;
 use crate::self_updater::try_update;
 use app::{App, Apps};
@@ -21,7 +21,9 @@ fn main() {
         Err(e) => println!("Failed to update! {e}"),
     }
     let apps = Apps::construct_apps();
-    let mut config = Config::load();
+    let mut config = Config::default();
+
+    config.load_from_file();
 
     let timeout = time::Duration::from_millis(5000);
 
@@ -33,15 +35,35 @@ fn main() {
     let mut drp_is_running = false;
     let mut discord_client: Option<DiscordIpcClient> = None;
     let mut current_app_option: Option<&App> = None;
-    loop {
+    'main: loop {
         if let Some(current_app) = current_app_option {
             if let Some(real_project_name) = is_program_still_running(&current_app) {
-                //if project name includes filtered words, use default project name
-                for excluded_word in &config.exclude_keywords_list {
-                    if real_project_name.contains(excluded_word.as_str()) {
-                        project_name = current_app.default_project_name.clone();
-                    } else {
-                        project_name = real_project_name.clone();
+                project_name = match config.should_list_include_or_exclude {
+                    IncludeExclude::Exclude => real_project_name.clone(),
+                    IncludeExclude::Include => current_app.default_project_name.clone(),
+                };
+                for listed_word in &config.keywords_list {
+                    match &config.should_list_include_or_exclude {
+                        &IncludeExclude::Exclude => {
+                            if real_project_name.contains(listed_word.as_str()) {
+                                if !&config.show_default_when_excluded {
+                                    continue 'main;
+                                }
+                                project_name = current_app.default_project_name.clone();
+                            } else {
+                                project_name = real_project_name.clone();
+                            }
+                        }
+                        &IncludeExclude::Include => {
+                            if real_project_name.contains(listed_word.as_str()) {
+                                project_name = real_project_name.clone();
+                            } else {
+                                if !&config.show_default_when_excluded {
+                                    continue 'main;
+                                }
+                                project_name = current_app.default_project_name.clone();
+                            }
+                        }
                     }
                 }
                 //If discord client isn't connected create and conenct it
@@ -86,7 +108,10 @@ fn main() {
                     //if discord client exists, update status
                     if let Some(dc) = discord_client.as_mut() {
                         match dc.set_activity(activity) {
-                            _ => (),
+                            Ok(_) => (),
+                            Err(e) => {
+                                dbg!(e);
+                            }
                         }
                     }
                 }
@@ -99,19 +124,22 @@ fn main() {
             //respond to tray icon messages
             match tray_receiver.try_recv() {
                 Ok(msg) => match msg {
-                    tray_icon::Message::AnonymiseProject => {
-                        //only exclude project name if it's not the default one
-                        for app in apps.as_iter() {
-                            if app.kind == current_app.kind {
-                                if app.default_project_name != project_name {
-                                    config.exclude_project(&project_name);
-                                }
-                            }
+                    tray_icon::Message::AddProjectToList => {
+                        if let Some(real_project_name) = is_program_still_running(&current_app) {
+                            config.add_project(&real_project_name);
+                        }
+                    }
+                    tray_icon::Message::RemoveProjectFromList => {
+                        if let Some(real_project_name) = is_program_still_running(&current_app) {
+                            config.remove_project(&real_project_name);
                         }
                     }
                     tray_icon::Message::Quit => {
                         println!("qiuitting!");
                         exit(0)
+                    }
+                    tray_icon::Message::OpenOptionsFile => {
+                        let _ = std::process::Command::new("crp_config.toml").spawn();
                     }
                 },
                 Err(_err) => (),
@@ -120,8 +148,8 @@ fn main() {
             //respond to tray icon messages
             match tray_receiver.try_recv() {
                 Ok(msg) => match msg {
-                    tray_icon::Message::AnonymiseProject => {}
                     tray_icon::Message::Quit => exit(0),
+                    _ => (),
                 },
                 Err(_err) => (),
             }

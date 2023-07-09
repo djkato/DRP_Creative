@@ -1,6 +1,6 @@
 [package]
 name = "drp_creative"
-version = "1.0.2"
+version = "1.0.3"
 edition = "2021"
 author = "https://djkato.net"
 
@@ -11,6 +11,8 @@ tray-item = "0.7.0"
 lazy_static = "1.4.0"
 self_update = { version = "0.36.0", features = ["archive-zip"] }
 win-msgbox = "0.1.2"
+serde = { version = "1.0.170", features = ["derive"] }
+toml = "0.7.6"
 
 [dependencies.windows]
 version = "0.39.0"

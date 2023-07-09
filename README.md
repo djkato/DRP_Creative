@@ -6,7 +6,7 @@ Examples:
 ![example1](https://i.imgur.com/yFzQh6O.png)
 ![example2](https://i.imgur.com/fziotzt.png)
 ![example3](https://i.imgur.com/9SEXuQr.png)
-
+![example4](https://i.imgur.com/ANAW6Ub.png)
 ## how to install:
 1. Grab the latest version from the [Releases](https://github.com/djkato/DRP_Creative/releases) page, then make a folder in `C:/Program Files/` and call it whatever, for example `DRP Creative`.
 3. Put the exe inside the folder you created and create a link to it.
@@ -17,29 +17,21 @@ Examples:
 
 ## How to use:
 -   App updates will be notified and suggested on startup via popup window.
--   When it's running, you'll notice a new icon appear on your Taskbar. If you want to exclude the **currently open project** from showing up, click on the icon and click on `Don't show current project`.
-![icon showcase](https://i.imgur.com/nADffGB.png)
+-   When it's running, you'll notice a new icon appear on your Taskbar. If you want to include/exclude the **currently open project** from showing up, click on the icon and click on `Remove project from include/exclude list`.
+- There are two modes for the keywords list:
+  1.  Exclude(default): If the currently open project files name contains the keyword anywhere, it will show the default project name instead.
+  2. Include: All projects will show default names, unless the the currently open project files name contains a keyword, then it will display the real name. This is a good alternative if you find yourself hiding more than showing what you're working on.
+- If you don't want to see the default project names, and instead just not display anything, you can change that behavior by setting `show_default_when_excluded` to `false` in the config file.
+- If you don't like the *"Portfolio: [your link]"* line on your status, you can disable it by setting `hide_portfolio_link` to `true`
 
--   To change the portfolio website or remove excluded projects and words from the program, run the program at least once, and a `.drp_config` file will appear. You can open this with any text editor and rewrite the lines there. be gentle though, program expects a certain format for the file ^^'
--   To disable the portfolio row, there's a "HIDE_PORTFOLIO_ROW" setting.
+Example `drp_config.toml`:
+```toml
+keywords_list = ["WORK", "Untitled  681*"]
+show_default_when_excluded = true # or false
+portfolio_link = "djkato.net"
+hide_portfolio_row = false
+should_list_include_or_exclude = "Include" # Or "Exclude", capital sensitive
 
-Example `.drp_config`:
-```json
-SHOULD_EXCLUDE_BE_ANONYMOUS:{
-n
-}
-
-PORTFOLIO_LINK:{
-djkato.net
-}
-
-EXCLUDE_CHARACTERS_LIST:{
-no_drp
-}
-
-HIDE_PORTFOLIO_ROW:{
-no
-}
 ```
 ### Currently supported programs:
 **Full support:**
