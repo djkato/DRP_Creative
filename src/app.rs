@@ -249,12 +249,6 @@ impl Apps {
 impl Apps {
     pub fn find_app(&self, str: &String) -> Option<&App> {
         for app in self.as_iter() {
-            // if (str
-            //     .to_lowercase()
-            //     .contains(&app.process_search_string.to_ascii_lowercase()))
-            // {
-            //     dbg!(str);
-            // }
             if str
                 .to_lowercase()
                 .contains(&app.process_search_string.to_lowercase())
@@ -272,7 +266,6 @@ impl App {
             AppKind::C4d => {
                 if let Some(split1) = window_title.rsplit_once("]") {
                     if let Some(split2) = split1.0.rsplit_once("[") {
-                        dbg!(&split2.1);
                         return split2.1.to_string();
                     }
                 }
