@@ -1,8 +1,8 @@
 [package]
 name = "drp_creative"
-version = "1.0.3"
+version = "1.0.4"
 edition = "2021"
-author = "https://djkato.net"
+authors = ["djkatovfx@gmail.com"]
 
 [dependencies]
 discord-rich-presence = "0.2.2"

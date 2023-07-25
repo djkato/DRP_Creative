@@ -8,7 +8,10 @@ pub fn get_running_program(apps: &Apps) -> Option<(&App, String)> {
     for window_name in running_window_names {
         //println!("{}", &window_name);
         if let Some(app) = apps.find_app(&window_name) {
-            if !window_name.contains("- Google Chrome") {
+            if !window_name.contains("- Google Chrome")
+                || !window_name.contains(" Mozilla Firefox")
+                || !window_name.contains("- Brave")
+            {
                 //So googling it won't affect the DRP lol
                 return Some((&app, app.parse(&window_name)));
             }
@@ -20,8 +23,14 @@ pub fn is_program_still_running(app: &App) -> Option<String> {
     let running_window_names = unsafe { get_running_windows_titles() };
 
     for window_name in running_window_names {
-        if window_name.contains(&app.process_search_string) {
-            if !window_name.contains("- Google Chrome") {
+        if window_name
+            .to_lowercase()
+            .contains(&app.process_search_string.to_lowercase())
+        {
+            if !window_name.contains("- Google Chrome")
+                || !window_name.contains(" Mozilla Firefox")
+                || !window_name.contains("- Brave")
+            {
                 //So googling it won't affect the DRP lol
                 return Some(app.parse(&window_name));
             }

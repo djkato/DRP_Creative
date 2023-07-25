@@ -249,7 +249,16 @@ impl Apps {
 impl Apps {
     pub fn find_app(&self, str: &String) -> Option<&App> {
         for app in self.as_iter() {
-            if str.contains(&app.process_search_string) {
+            // if (str
+            //     .to_lowercase()
+            //     .contains(&app.process_search_string.to_ascii_lowercase()))
+            // {
+            //     dbg!(str);
+            // }
+            if str
+                .to_lowercase()
+                .contains(&app.process_search_string.to_lowercase())
+            {
                 return Some(&app);
             }
         }
@@ -261,19 +270,13 @@ impl App {
     pub fn parse(&self, window_title: &String) -> String {
         match self.kind {
             AppKind::C4d => {
-                let mut end_i: usize = window_title.len();
-                let mut start_i: usize = 0;
-                for (i, char) in window_title.chars().enumerate() {
-                    if char == '[' {
-                        start_i = i;
-                        if let Some(curr_end_i) = window_title.rfind("] - ") {
-                            end_i = curr_end_i;
-                        } else {
-                            return self.default_project_name.clone();
-                        }
+                if let Some(split1) = window_title.rsplit_once("]") {
+                    if let Some(split2) = split1.0.rsplit_once("[") {
+                        dbg!(&split2.1);
+                        return split2.1.to_string();
                     }
                 }
-                return window_title[start_i + 1..end_i].to_string();
+                return self.default_project_name.clone();
             }
             AppKind::Maya => {
                 let match_index = match window_title.as_str().find(".mb* - Autodesk Maya") {

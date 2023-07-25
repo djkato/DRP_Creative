@@ -2,4 +2,4 @@ keywords_list = []
 show_default_when_excluded = true
 portfolio_link = "djkato.net"
 hide_portfolio_row = false
-should_list_include_or_exclude = "Include"
+should_list_include_or_exclude = "Exclude"
