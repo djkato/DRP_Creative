@@ -1,3 +1,4 @@
+<a href='https://ko-fi.com/A0A8Q3SVZ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 # Discord Rich Presence for Creative Apps
 ### Show your friends what you're working on, be it in Adobe Suite, Autodesk Suite, Cinema 4D or many more!
 This app runs in the background and looks for processes, then parses the windows title and turns it into a project name to display with Discords Rich Presence.
