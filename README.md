@@ -1,3 +1,8 @@
+# STATE OF PROJECT
+I've been using Linux for the past few years now, so I have no reason to keep maintaining a Windows-only program.
+Feel free to keep reporting issues, but I probably won't be the one to fix them.
+__If someone wants to step up maintenance, just fork it and let me know so I can archive this one.__
+
 <a href='https://ko-fi.com/A0A8Q3SVZ' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi4.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 # Discord Rich Presence for Creative Apps
 ### Show your friends what you're working on, be it in Adobe Suite, Autodesk Suite, Cinema 4D or many more!
