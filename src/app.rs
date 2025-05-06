@@ -119,7 +119,7 @@ impl Apps {
             C4d: App {
                 default_project_name: "Cinema 4D Project".to_string(),
                 drp_client_id: "936296341250904065".to_string(),
-                process_search_string: "Cinema 4D R".to_string(),
+                process_search_string: "Cinema 4D".to_string(),
                 kind: AppKind::C4d,
             },
             Maya: App {
